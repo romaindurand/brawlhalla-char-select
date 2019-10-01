@@ -33,6 +33,22 @@ const LegendBio = styled.div`
   margin-bottom: 10px;
 `
 
+const ExpBox = styled.div`
+  border-radius: 3px;
+  border: 1px solid #4be3f7;
+  height: 10px;
+  background-color: darkgray;
+`
+
+const ExpBar = styled.div`
+  background-color: #4be3f7;
+  height: 10px;
+`
+
+const ExpContainer = styled.div`
+  margin-top: 10px;
+`
+
 
 export function Legend ({legend}) {
   const legendImageName = legend.legend_name_key
@@ -52,6 +68,13 @@ export function Legend ({legend}) {
       <StatBar stat="dex" value={legend.dexterity} />
       <StatBar stat="spd" value={legend.speed} />
     </div>
+    {legend.xp &&
+      <ExpContainer>
+        <div>Level {legend.level}</div>
+        <div>Exp left: {Math.round(legend.xpToLvlUp)}</div>
+        <ExpBox><ExpBar style={{width: `${legend.percent * 100}%`}}></ExpBar></ExpBox>
+      </ExpContainer>
+    }
     {/* <pre>{JSON.stringify(legend)}</pre> */}
   </StyledLegend>)
 }

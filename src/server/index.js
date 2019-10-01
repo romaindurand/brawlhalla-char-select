@@ -18,7 +18,6 @@ api.post('/closest-exp', async (req, res) => {
   const steamUrl = req.body.steamUrl
   const bhId = await bh.getBhidBySteamUrl(steamUrl)
   const stats = await bh.getPlayerStats(String(bhId.brawlhalla_id))
-  console.log(stats.legends[0])
   const legends = stats.legends.map(legend => {
     const percent = legend.xp_percentage
     const level = legend.level
@@ -26,13 +25,13 @@ api.post('/closest-exp', async (req, res) => {
     const xp = totalXp * percent
     return {
       name: legend.legend_name_key,
+      level,
+      percent,
       xp,
       xpToLvlUp: totalXp - xp
     }
   }).sort((a, b) => a.xpToLvlUp - b.xpToLvlUp)
-
-  console.log({legends})
-  res.json({legends: stats.legends})
+  res.json(legends)
 })
 
 console.log(`API server listening on http://localhost:${process.env.REACT_APP_API_PORT}`)

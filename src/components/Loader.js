@@ -1,8 +1,18 @@
 import React from 'react'
 import styled from 'styled-components'
 
+const Background = styled.div`
+  z-index: 100;
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.5);
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+`
+
 const StyledLoder = styled.div`
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%) scale(2);
   top: 50%;
   left: 50%;
   display: inline-block;
@@ -16,7 +26,7 @@ const StyledLoder = styled.div`
     width: 11px;
     height: 11px;
     border-radius: 50%;
-    background: #000;
+    background: #4be3f7;
     animation-timing-function: cubic-bezier(0, 1, 1, 0);
   }
   div:nth-child(1) {
@@ -62,7 +72,11 @@ const StyledLoder = styled.div`
 `
 
 export function Loader () {
-  return (<StyledLoder>
-    <div></div><div></div><div></div><div></div>
-  </StyledLoder>)
+  return (
+    <Background>
+      <StyledLoder>
+        <div></div><div></div><div></div><div></div>
+      </StyledLoder>
+    </Background>
+  )
 }
