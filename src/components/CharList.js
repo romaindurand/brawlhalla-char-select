@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
-import { Loader } from './Loader';
 import { Legend } from './Legend';
 
 const StyledCharList = styled.div`
@@ -16,7 +15,7 @@ export function CharList ({legends}) {
   return (
     <StyledCharList>
       {legends.map(legend =>
-        <Legend legend={legend} />)
+        <Legend legend={legend} key={legend.legend_id}/>)
       }
     </StyledCharList>  
   )

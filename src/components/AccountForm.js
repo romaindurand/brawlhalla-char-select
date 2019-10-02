@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import ky from 'ky'
 import { CARDIFY } from './style/mixins';
 import { Loader } from './Loader'
+import { getClosestExp } from '../lib/api';
 
 const StyledAccountForm = styled.div`
   ${CARDIFY}
@@ -34,12 +34,7 @@ export function AccountForm ({ callback }) {
     event.preventDefault()
     setLoading(true)
     const url = event.target.elements[0].value
-    const port = process.env.REACT_APP_API_PORT
-    const legends = await ky.post(`http://localhost:${port}/closest-exp`, {
-      json: {
-        steamUrl: url
-      }
-    }).json()
+    const legends = await getClosestExp(url)
     setLoading(false)
     callback(legends)
   }

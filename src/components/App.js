@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import ky from 'ky'
 import { AccountForm } from './AccountForm';
 import { CharList } from './CharList';
 import { Loader } from './Loader';
 import './index.css'
+import { getLegends } from '../lib/api';
 
 
 function App() {
@@ -17,8 +17,7 @@ function App() {
   }
   useEffect(() => {
     const fetchLegends = async () => {
-      const port = process.env.REACT_APP_API_PORT
-      const legends = await ky.get(`http://localhost:${port}/legends`).json()
+      const legends = await getLegends()
       setLegends(legends)
     }
     fetchLegends()

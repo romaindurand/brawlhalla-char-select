@@ -31,7 +31,7 @@ const StatPoint = styled.img.attrs(props => ({
 `
 
 export function StatBar ({stat, value}) {
-  const points = new Array(+value - 1).fill(0).map(() => <StatPoint />)
+  const points = new Array(+value - 1).fill(0).map((_, index) => <StatPoint key={index}/>)
 
   return (
     <StyledStatBar>

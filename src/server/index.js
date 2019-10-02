@@ -9,12 +9,12 @@ const api = express()
 api.use(cors())
 api.use(bodyParser.json())
 
-api.get('/legends', (req, res) => {
+api.get('/api/legends', (req, res) => {
   const legends = bh.legends.get('all')
   res.json(legends)
 })
 
-api.post('/closest-exp', async (req, res) => {
+api.post('/api/closest-exp', async (req, res) => {
   const steamUrl = req.body.steamUrl
   const bhId = await bh.getBhidBySteamUrl(steamUrl)
   const stats = await bh.getPlayerStats(String(bhId.brawlhalla_id))
