@@ -1,14 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Legend } from './Legend';
-
-const StyledCharList = styled.div`
-  border-radius: 3px;
-  border: 1px solid grey;
-  padding: 10px;
-  margin: 10px;
-`
-
+import { Legend } from './Legend'
 
 export function CharList ({legends}) {
   if (!legends) return null
@@ -20,3 +12,10 @@ export function CharList ({legends}) {
     </StyledCharList>  
   )
 }
+
+const StyledCharList = styled.div`
+  border-radius: 3px;
+  border: 1px solid grey;
+  padding: 10px;
+  margin: 10px;
+`

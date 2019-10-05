@@ -1,6 +1,16 @@
 import React from 'react'
 import styled from 'styled-components'
 
+export function Loader () {
+  return (
+    <Background>
+      <StyledLoder>
+        <div></div><div></div><div></div><div></div>
+      </StyledLoder>
+    </Background>
+  )
+}
+
 const Background = styled.div`
   z-index: 100;
   position: absolute;
@@ -70,13 +80,3 @@ const StyledLoder = styled.div`
     }
   }
 `
-
-export function Loader () {
-  return (
-    <Background>
-      <StyledLoder>
-        <div></div><div></div><div></div><div></div>
-      </StyledLoder>
-    </Background>
-  )
-}

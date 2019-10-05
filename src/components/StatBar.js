@@ -1,6 +1,18 @@
 import React from 'react'
 import styled from 'styled-components'
 
+export function StatBar ({stat, value}) {
+  const points = new Array(+value - 1).fill(0).map((_, index) => <StatPoint key={index}/>)
+
+  return (
+    <StyledStatBar>
+      <StatBarBg src="/images/ui/statBar.png" />
+      <StatIcon src={`/images/ui/${stat}.png`}/>
+      <StatPoints>{points}</StatPoints>
+    </StyledStatBar>
+  )
+}
+
 const StyledStatBar = styled.div`
   display: inline-block;
   position: relative;
@@ -29,15 +41,3 @@ const StatPoint = styled.img.attrs(props => ({
   position: relative;
   display: inline-block;
 `
-
-export function StatBar ({stat, value}) {
-  const points = new Array(+value - 1).fill(0).map((_, index) => <StatPoint key={index}/>)
-
-  return (
-    <StyledStatBar>
-      <StatBarBg src="/images/ui/statBar.png" />
-      <StatIcon src={`/images/ui/${stat}.png`}/>
-      <StatPoints>{points}</StatPoints>
-    </StyledStatBar>
-  )
-}

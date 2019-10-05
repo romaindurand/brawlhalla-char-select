@@ -4,7 +4,43 @@ import { CARDIFY } from './style/mixins';
 import { Loader } from './Loader'
 import { getClosestExp } from '../lib/api';
 
+export function AccountForm ({ callback, totalLvl = 0 }) {
+  const [loading, setLoading] = useState(false)
+  async function submitForm (event) {
+    event.preventDefault()
+    setLoading(true)
+    try {
+      const url = event.target.elements[0].value
+      const legends = await getClosestExp(url)
+      callback(legends)
+    } catch (ex) {
+      const message = await ex.response.json()
+      alert(message.error)
+    }
+    setLoading(false)
+  }
+  return (
+    <StyledAccountForm>
+      {loading && <Loader />}
+      <form onSubmit={submitForm}>
+        <StyledInput
+          disabled={loading}
+          size="20"
+          type="text"
+          placeholder="enter steam URL"
+        />
+        <Submit 
+          type="submit"
+          disabled={loading}>Send
+        </Submit>
+      </form>
+      {totalLvl > 0 && <span>Total levels : {totalLvl}</span>}
+    </StyledAccountForm>  
+  )
+}
+
 const StyledAccountForm = styled.div`
+  color: #4be3f7;
   ${CARDIFY}
 `
 
@@ -26,33 +62,3 @@ const Submit = styled.button.attrs({ type: 'submit' })`
   border-radius: 5px;
   border: 2px solid #4be3f7;
 `
-
-
-export function AccountForm ({ callback }) {
-  const [loading, setLoading] = useState(false)
-  async function submitForm (event) {
-    event.preventDefault()
-    setLoading(true)
-    const url = event.target.elements[0].value
-    const legends = await getClosestExp(url)
-    setLoading(false)
-    callback(legends)
-  }
-  return (
-    <StyledAccountForm>
-      {loading && <Loader />}
-      <form onSubmit={submitForm}>
-        <StyledInput
-          disabled={loading}
-          size="20"
-          type="text"
-          placeholder="enter steam URL or character name"
-          defaultValue=""/>
-        <Submit 
-          type="submit"
-          disabled={loading}>Send
-        </Submit>
-      </form>
-    </StyledAccountForm>  
-  )
-}
