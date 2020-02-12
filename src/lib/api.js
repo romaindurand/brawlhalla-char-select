@@ -1,7 +1,7 @@
 import ky from 'ky'
 
-export function getClosestExp(url) {
-  return ky.post(`${getApiBasePath()}/closest-exp`, {
+export function findAccount(url) {
+  return ky.post(`${getApiBasePath()}/find-account`, {
     json: {
       steamUrl: url
     }

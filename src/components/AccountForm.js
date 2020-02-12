@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import { CARDIFY } from './style/mixins';
 import { Loader } from './Loader'
-import { getClosestExp } from '../lib/api';
+import { findAccount } from '../lib/api';
 
 export function AccountForm ({ callback, totalLvl = 0 }) {
   const [loading, setLoading] = useState(false)
@@ -10,9 +10,9 @@ export function AccountForm ({ callback, totalLvl = 0 }) {
     event.preventDefault()
     setLoading(true)
     try {
-      const url = event.target.elements[0].value
-      const legends = await getClosestExp(url)
-      callback(legends)
+      const accountInput = event.target.elements[0].value
+      const stats = await findAccount(accountInput)
+      callback(stats)
     } catch (ex) {
       const message = await ex.response.json()
       alert(message.error)
@@ -29,10 +29,7 @@ export function AccountForm ({ callback, totalLvl = 0 }) {
           type="text"
           placeholder="enter steam URL"
         />
-        <Submit 
-          type="submit"
-          disabled={loading}>Send
-        </Submit>
+        <Submit disabled={loading}>Send</Submit>
       </form>
       {totalLvl > 0 && <span>Total levels : {totalLvl}</span>}
     </StyledAccountForm>  

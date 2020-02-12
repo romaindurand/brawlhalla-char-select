@@ -2,13 +2,21 @@ import React from 'react'
 import styled from 'styled-components'
 import { Legend } from './Legend'
 
-export function CharList ({legends}) {
+export function CharList ({legends, accountLegends}) {
   if (!legends) return null
   return (
     <StyledCharList>
-      {legends.map(legend =>
-        <Legend legend={legend} key={legend.legend_id}/>)
-      }
+        {legends.map(staticLegend => {
+          // debugger
+          const accountLegend = accountLegends.find(accountLegend => accountLegend.name === staticLegend.legend_name_key)
+          return <Legend
+            legend={staticLegend}
+            key={staticLegend.legend_id}
+            accountLegend={accountLegend}
+          />
+        })
+
+        }
     </StyledCharList>  
   )
 }
