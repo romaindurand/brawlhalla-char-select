@@ -1,8 +1,9 @@
+import PropTypes from 'prop-types'
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import { CARDIFY } from './style/mixins';
+import { CARDIFY } from './style/mixins'
 import { Loader } from './Loader'
-import { findAccount } from '../lib/api';
+import { findAccount } from '../lib/api'
 
 export function AccountForm ({ callback, totalLvl = 0 }) {
   const [loading, setLoading] = useState(false)
@@ -32,8 +33,13 @@ export function AccountForm ({ callback, totalLvl = 0 }) {
         <Submit disabled={loading}>Send</Submit>
       </form>
       {totalLvl > 0 && <span>Total levels : {totalLvl}</span>}
-    </StyledAccountForm>  
+    </StyledAccountForm>
   )
+}
+
+AccountForm.propTypes = {
+  callback: PropTypes.func,
+  totalLvl: PropTypes.number
 }
 
 const StyledAccountForm = styled.div`

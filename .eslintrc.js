@@ -1,7 +1,8 @@
 module.exports = {
   env: {
     browser: true,
-    es6: true
+    es6: true,
+    jest: true
   },
   extends: [
     'plugin:react/recommended',
@@ -23,5 +24,10 @@ module.exports = {
   ],
   rules: {
     'react/jsx-uses-react': 1
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
   }
 }

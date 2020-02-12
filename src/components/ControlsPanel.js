@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import styled from 'styled-components'
 import { CARDIFY } from './style/mixins'
@@ -10,12 +11,12 @@ const sortOptions = [
   'Win rate'
 ]
 
-export function ControlsPanel ({callback}) {
+export function ControlsPanel ({ callback }) {
   function handleSortChange (event) {
     const sortValue = event.target.value
     const sortIndex = sortOptions.findIndex(sortOption => sortOption === sortValue)
     const needsAccount = sortIndex >= 2
-    callback({needsAccount, sortValue})
+    callback(null, { needsAccount, sortValue })
   }
   return <StyledPanel>
     <div>
@@ -32,6 +33,10 @@ export function ControlsPanel ({callback}) {
       </SortSelect>
     </div>
   </StyledPanel>
+}
+
+ControlsPanel.propTypes = {
+  callback: PropTypes.any
 }
 
 const StyledPanel = styled.div`

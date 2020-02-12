@@ -1,7 +1,8 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import styled from 'styled-components'
 
-export function StatBar ({stat, value}) {
+export function StatBar ({ stat, value }) {
   const points = new Array(+value - 1).fill(0).map((_, index) => <StatPoint key={index}/>)
 
   return (
@@ -11,6 +12,11 @@ export function StatBar ({stat, value}) {
       <StatPoints>{points}</StatPoints>
     </StyledStatBar>
   )
+}
+
+StatBar.propTypes = {
+  stat: PropTypes.any,
+  value: PropTypes.any
 }
 
 const StyledStatBar = styled.div`

@@ -1,9 +1,10 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import styled from 'styled-components'
 import { StatBar } from './StatBar'
 import { CARDIFY } from './style/mixins'
 
-export function Legend ({legend}) {
+export function Legend ({ legend }) {
   const legendImageName = legend.legend_name_key
     .split(' ')
     .map(namePart => namePart.replace(/^./, namePart[0].toUpperCase()))
@@ -25,11 +26,15 @@ export function Legend ({legend}) {
       <ExpContainer>
         <div>Level {legend.level}</div>
         <div>Exp left: {Math.round(legend.xpToLvlUp)}</div>
-        <ExpBox><ExpBar style={{width: `${legend.percent * 100}%`}}></ExpBar></ExpBox>
+        <ExpBox><ExpBar style={{ width: `${legend.percent * 100}%` }}></ExpBar></ExpBox>
       </ExpContainer>
     }
     {/* <pre>{JSON.stringify(legend)}</pre> */}
   </StyledLegend>)
+}
+
+Legend.propTypes = {
+  legend: PropTypes.any
 }
 
 const StyledLegend = styled.div`

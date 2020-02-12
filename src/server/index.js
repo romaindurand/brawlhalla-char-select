@@ -19,7 +19,7 @@ api.post('/api/find-account', async (req, res) => {
   try {
     const bhId = await bh.getBhidBySteamUrl(steamUrl)
     const stats = await bh.getPlayerStats(String(bhId.brawlhalla_id))
-    console.log({ stats })    
+    console.log({ stats })
     const legends = stats.legends
       .map(computeRemainingXp)
       .sort((a, b) => a.xpToLvlUp - b.xpToLvlUp)
@@ -27,14 +27,14 @@ api.post('/api/find-account', async (req, res) => {
   } catch (ex) {
     res
       .status(400)
-      .json({error: ex})
+      .json({ error: ex })
   }
 })
 
 console.log(`API server listening on http://localhost:${process.env.REACT_APP_API_PORT}`)
 api.listen(process.env.REACT_APP_API_PORT)
 
-function computeRemainingXp(legend) {
+function computeRemainingXp (legend) {
   const percent = legend.xp_percentage
   const level = legend.level
   const totalXp = getXpTarget(level)

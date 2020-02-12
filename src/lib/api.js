@@ -1,6 +1,6 @@
 import ky from 'ky'
 
-export function findAccount(url) {
+export function findAccount (url) {
   return ky.post(`${getApiBasePath()}/find-account`, {
     json: {
       steamUrl: url
@@ -8,7 +8,7 @@ export function findAccount(url) {
   }).json()
 }
 
-export function getLegends() {
+export function getLegends () {
   return ky.get(`${getApiBasePath()}/legends`).json()
 }
 

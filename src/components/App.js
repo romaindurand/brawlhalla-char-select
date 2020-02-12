@@ -17,7 +17,8 @@ function App () {
     setLegends(legendsWithAccountData)
   }
 
-  function onControlsChanged (controls) {
+  function onControlsChanged (error, controls) {
+    if (error) return console.error(error)
     console.log({ controls })
   }
   useEffect(() => {
