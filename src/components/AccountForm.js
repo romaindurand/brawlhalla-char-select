@@ -29,7 +29,7 @@ export function AccountForm ({ onUserFound }) {
           size="20"
           type="text"
           placeholder="enter steam URL"
-          defaultValue={process.env.NODE_ENV !== 'production' && 'https://steamcommunity.com/id/Iceshigh'}
+          defaultValue={process.env.NODE_ENV !== 'production' ? 'https://steamcommunity.com/id/Iceshigh' : ''}
         />
         <Submit disabled={loading}>Send</Submit>
       </form>
