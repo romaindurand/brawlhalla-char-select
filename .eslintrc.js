@@ -23,7 +23,8 @@ module.exports = {
     'react'
   ],
   rules: {
-    'react/jsx-uses-react': 1
+    'react/jsx-uses-react': 1,
+    'comma-dangle': ['error', 'always-multiline']
   },
   "settings": {
     "react": {

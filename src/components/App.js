@@ -1,26 +1,33 @@
 import React, { useEffect, useState } from 'react'
+
+import { ControlsPanel } from './ControlsPanel'
 import { AccountForm } from './AccountForm'
+import { UserStats } from './UserStats'
 import { CharList } from './CharList'
 import { Loader } from './Loader'
+
 import './index.css'
+
 import { getLegends } from '../lib/api'
-import { ControlsPanel } from './ControlsPanel'
-import getXpTarget from '../lib/exp'
+import { UserContext } from '../context/UserContext'
+import { LegendsContext } from '../context/LegendsContext'
+import { ControlsContext } from '../context/ControlsContext'
+import { sortFunctions, sortLegends } from '../lib/sortLegends'
 
 function App () {
   const [legends, setLegends] = useState([])
-  const [stats, setStats] = useState({ legends: [] })
+  const [user, setUser] = useState(null)
+  const [controls, setControls] = useState({
+    sortFunction: sortFunctions[0],
+  })
 
-  function onAccountFound (stats) {
-    setStats(stats)
-    const legendsWithAccountData = mergeLegendsWithAccountData(legends, stats.legends)
-    setLegends(legendsWithAccountData)
+  function onUserFound (user) {
+    setUser(user)
+    const { sortFunction } = controls
+    const sortedLegends = sortLegends({ legends, user, sortFunction })
+    setLegends(sortedLegends)
   }
 
-  function onControlsChanged (error, controls) {
-    if (error) return console.error(error)
-    console.log({ controls })
-  }
   useEffect(() => {
     const fetchLegends = async () => {
       try {
@@ -28,6 +35,10 @@ function App () {
         setLegends(legends)
       } catch (ex) {
         alert('unable to fetch legends')
+        console.error({
+          message: ex.message,
+          stack: ex.stack,
+        })
       }
     }
     fetchLegends()
@@ -39,37 +50,18 @@ function App () {
     </>)
   }
 
-  const totalLvl = legends.reduce((memo, legend) => {
-    return memo + (legend.level || 0)
-  }, 0)
-
   return (<>
-    <AccountForm
-      callback={onAccountFound}
-      totalLvl={totalLvl}
-    />
-    <ControlsPanel
-      callback={onControlsChanged}
-    />
-    <CharList legends={legends} accountLegends={stats.legends} />
+    <LegendsContext.Provider value={{ legends, setLegends }}>
+      <UserContext.Provider value={{ user, setUser }}>
+        <ControlsContext.Provider value={{ controls, setControls }}>
+          <AccountForm {...{ onUserFound, user }}/>
+          <UserStats {...{ user }}/>
+          <ControlsPanel />
+          <CharList {...{ legends }} />
+        </ControlsContext.Provider>
+      </UserContext.Provider>
+    </LegendsContext.Provider>
   </>)
 }
 
 export default App
-
-function mergeLegendsWithAccountData (staticLegends, accountLegends) {
-  return staticLegends.map(staticLegend => {
-    const accountLegend = accountLegends.find(accountLegend => accountLegend.name === staticLegend.legend_name_key)
-    if (!accountLegend) {
-      return {
-        ...staticLegend,
-        level: 1,
-        percent: 0,
-        xp: 0,
-        xpToLvlUp: getXpTarget(1)
-      }
-    }
-    accountLegend.name = undefined
-    return { ...staticLegend, ...accountLegend }
-  }).sort((a, b) => a.xpToLvlUp - b.xpToLvlUp)
-}

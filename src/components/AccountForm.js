@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types'
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import { CARDIFY } from './style/mixins'
+import { CARDIFY, COLORS } from './style/mixins'
 import { Loader } from './Loader'
 import { findAccount } from '../lib/api'
 
-export function AccountForm ({ callback, totalLvl = 0 }) {
+export function AccountForm ({ onUserFound }) {
   const [loading, setLoading] = useState(false)
   async function submitForm (event) {
     event.preventDefault()
@@ -13,10 +13,10 @@ export function AccountForm ({ callback, totalLvl = 0 }) {
     try {
       const accountInput = event.target.elements[0].value
       const stats = await findAccount(accountInput)
-      callback(stats)
+      onUserFound(stats)
     } catch (ex) {
-      const message = await ex.response.json()
-      alert(message.error)
+      console.error(ex.message)
+      console.error(ex.stack)
     }
     setLoading(false)
   }
@@ -29,27 +29,26 @@ export function AccountForm ({ callback, totalLvl = 0 }) {
           size="20"
           type="text"
           placeholder="enter steam URL"
+          defaultValue={process.env.NODE_ENV !== 'production' && 'https://steamcommunity.com/id/Iceshigh'}
         />
         <Submit disabled={loading}>Send</Submit>
       </form>
-      {totalLvl > 0 && <span>Total levels : {totalLvl}</span>}
     </StyledAccountForm>
   )
 }
 
 AccountForm.propTypes = {
-  callback: PropTypes.func,
-  totalLvl: PropTypes.number
+  onUserFound: PropTypes.func,
 }
 
 const StyledAccountForm = styled.div`
-  color: #4be3f7;
+  color: ${COLORS.BH_BLUE};
   ${CARDIFY}
 `
 
 const StyledInput = styled.input`
   border-radius: 5px;
-  border: 1px solid #4be3f7;
+  border: 1px solid ${COLORS.BH_BLUE};
   padding: 10px;
   width: 400px;
   font-size: large;
@@ -57,11 +56,11 @@ const StyledInput = styled.input`
 `
 
 const Submit = styled.button.attrs({ type: 'submit' })`
-  background-color: #162950;
+  background-color: ${COLORS.LEGEND_BG};
   padding: 10px;
-  color: #4be3f7;
+  color: ${COLORS.BH_BLUE};
   height: 40px;
   margin: 5px;
   border-radius: 5px;
-  border: 2px solid #4be3f7;
+  border: 2px solid ${COLORS.BH_BLUE};
 `

@@ -3,18 +3,12 @@ import React from 'react'
 import styled from 'styled-components'
 import { Legend } from './Legend'
 
-export function CharList ({ legends, accountLegends }) {
+export function CharList ({ legends }) {
   if (!legends) return null
   return (
     <StyledCharList>
-      {legends.map(staticLegend => {
-        // debugger
-        const accountLegend = accountLegends.find(accountLegend => accountLegend.name === staticLegend.legend_name_key)
-        return <Legend
-          legend={staticLegend}
-          key={staticLegend.legend_id}
-          accountLegend={accountLegend}
-        />
+      {legends.map(legend => {
+        return <Legend {...{ legend }} key={legend.legend_id}/>
       })
 
       }
@@ -23,8 +17,8 @@ export function CharList ({ legends, accountLegends }) {
 }
 
 CharList.propTypes = {
-  accountLegends: PropTypes.any,
-  legends: PropTypes.any
+  userLegends: PropTypes.any,
+  legends: PropTypes.any,
 }
 
 const StyledCharList = styled.div`

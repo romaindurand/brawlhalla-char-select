@@ -49,6 +49,7 @@ table {
 
 /* **************** CUSTOM ************* */
 body {
-  background-color: #162950;  
+	background-color: black;
+	color: white;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 }

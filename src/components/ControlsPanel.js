@@ -1,47 +1,46 @@
-import PropTypes from 'prop-types'
-import React from 'react'
+import React, { useContext } from 'react'
 import styled from 'styled-components'
-import { CARDIFY } from './style/mixins'
+import { CARDIFY, COLORS } from './style/mixins'
+import { UserContext } from '../context/UserContext'
+import { LegendsContext } from '../context/LegendsContext'
+import { ControlsContext } from '../context/ControlsContext'
+import { findFunctionByLabel, sortLabels, sortLegends } from '../lib/sortLegends'
 
-const sortOptions = [
-  'Release date',
-  'Name',
-  'Closest to level up',
-  'XP',
-  'Win rate'
-]
-
-export function ControlsPanel ({ callback }) {
+export function ControlsPanel () {
+  const { user } = useContext(UserContext)
+  const { legends, setLegends } = useContext(LegendsContext)
+  const { controls, setControls } = useContext(ControlsContext)
+  console.log({ user })
+  const filteredSortOptions = sortLabels
+    .filter((_, index) => {
+      if (user) return true
+      return index < 2
+    })
+    .map(sortOption => (
+      <option value={sortOption} key={sortOption}>
+        {sortOption}
+      </option>
+    ))
   function handleSortChange (event) {
     const sortValue = event.target.value
-    const sortIndex = sortOptions.findIndex(sortOption => sortOption === sortValue)
-    const needsAccount = sortIndex >= 2
-    callback(null, { needsAccount, sortValue })
+    const sortFunction = findFunctionByLabel(sortValue)
+    setControls({ ...controls, sortValue, sortFunction })
+    const sortedLegends = sortLegends({ legends, user, sortFunction })
+    setLegends(sortedLegends)
   }
   return <StyledPanel>
     <div>
       <span>Sort by</span>
       <SortSelect onChange={handleSortChange}>
-        {sortOptions.map(sortOption => (
-          <option
-            value={sortOption}
-            key={sortOption}
-          >
-            {sortOption}
-          </option>
-        ))}
+        { filteredSortOptions }
       </SortSelect>
     </div>
   </StyledPanel>
 }
 
-ControlsPanel.propTypes = {
-  callback: PropTypes.any
-}
-
 const StyledPanel = styled.div`
   ${CARDIFY};
-  color: #4be3f7;
+  color: ${COLORS.BH_BLUE};
 `
 
 const SortSelect = styled.select`
@@ -49,5 +48,5 @@ const SortSelect = styled.select`
   padding: 5px;
   margin-left: 10px;
   font-size: larger;
-  border: 1px solid #4be3f7;
+  border: 1px solid ${COLORS.BH_BLUE};
 `

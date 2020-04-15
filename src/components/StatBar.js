@@ -16,7 +16,7 @@ export function StatBar ({ stat, value }) {
 
 StatBar.propTypes = {
   stat: PropTypes.any,
-  value: PropTypes.any
+  value: PropTypes.any,
 }
 
 const StyledStatBar = styled.div`
@@ -41,8 +41,8 @@ const StatPoints = styled.div`
   left: 37px;
 `
 
-const StatPoint = styled.img.attrs(props => ({
-  src: '/images/ui/statPoint.png'
+const StatPoint = styled.img.attrs(() => ({
+  src: '/images/ui/statPoint.png',
 }))`
   position: relative;
   display: inline-block;

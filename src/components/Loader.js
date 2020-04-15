@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { COLORS } from './style/mixins'
 
 export function Loader () {
   return (
@@ -36,7 +37,7 @@ const StyledLoder = styled.div`
     width: 11px;
     height: 11px;
     border-radius: 50%;
-    background: #4be3f7;
+    background: ${COLORS.BH_BLUE};
     animation-timing-function: cubic-bezier(0, 1, 1, 0);
   }
   div:nth-child(1) {
