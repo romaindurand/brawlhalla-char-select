@@ -34,7 +34,7 @@ function getLevelUpXpTarget (level) {
   return getLevelUpXpTargetAboveLimit(level)
 }
 
-function computeRemainingXp (legend) {
+export function computeRemainingXp (legend) {
   let percent = legend.xp_percentage
   let level = legend.level
   const xpTarget = getLevelUpXpTarget(level)
@@ -65,8 +65,4 @@ function computeRemainingXp (legend) {
     winRate,
     matchtime: legend.matchtime,
   }
-}
-
-module.exports = {
-  computeRemainingXp,
 }

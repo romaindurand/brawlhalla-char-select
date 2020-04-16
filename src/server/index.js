@@ -1,7 +1,5 @@
-require('dotenv').config()
-const express = require('express')
-
-const { setupRoutes } = require('./routes')
+import { setupRoutes } from './routes'
+import express from 'express'
 
 const api = express()
 setupRoutes(api)

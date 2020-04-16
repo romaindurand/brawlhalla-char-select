@@ -1,19 +1,17 @@
-const cors = require('cors')
-const bodyParser = require('body-parser')
-const bh = require('brawlhalla-api')(process.env.API_KEY)
+import cors from 'cors'
+import bodyParser from 'body-parser'
+import BrawlhallaApi from 'brawlhalla-api'
+import { computeRemainingXp } from '../lib/exp'
 
-const { computeRemainingXp } = require('../lib/exp')
+const bh = BrawlhallaApi(process.env.API_KEY)
+console.log(process.env.API_KEY)
 
-function setupRoutes (api) {
+export function setupRoutes (api) {
   api.use(cors())
   api.use(bodyParser.json())
 
   api.get('/api/legends', allLegendsHandler)
   api.post('/api/find-account', findAccountHandler)
-}
-
-module.exports = {
-  setupRoutes,
 }
 
 async function findAccountHandler (req, res) {
