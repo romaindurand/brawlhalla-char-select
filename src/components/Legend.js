@@ -1,17 +1,20 @@
 import PropTypes from 'prop-types'
-import React from 'react'
+import React, { forwardRef } from 'react'
 import styled from 'styled-components'
 import { StatBar } from './StatBar'
 import { CARDIFY, COLORS } from './style/mixins'
 
-export function Legend ({ legend }) {
+// forwardRef is needed for react-flip-move to work
+export const Legend = forwardRef(LegendWithRef)
+
+function LegendWithRef ({ legend }, ref) {
   if (!legend) return null
   const legendImageName = legend.legend_name_key
     .split(' ')
     .map(namePart => namePart.replace(/^./, namePart[0].toUpperCase()))
     .join('') + '.png'
   const legendImagePath = `/images/legends/${legendImageName}`
-  return (<StyledLegend {...{ legend }}>
+  return (<StyledLegend {...{ legend }} ref={ref}>
     <LegendImage
       src={legendImagePath}
       alt={legend.bio_name}
@@ -46,7 +49,7 @@ function handleImgFallback (error) {
   error.target.src = '/images/legends/default.png'
 }
 
-Legend.propTypes = {
+LegendWithRef.propTypes = {
   legend: PropTypes.any,
 }
 

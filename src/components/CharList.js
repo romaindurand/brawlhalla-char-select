@@ -1,17 +1,20 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import styled from 'styled-components'
+import FlipMove from 'react-flip-move'
 import { Legend } from './Legend'
 
 export function CharList ({ legends }) {
   if (!legends) return null
   return (
     <StyledCharList>
-      {legends.map(legend => {
-        return <Legend {...{ legend }} key={legend.legend_id}/>
-      })
+      <FlipMove staggerDurationBy={10} staggerDelayBy={20}>
+        {legends.map(legend => {
+          return <Legend {...{ legend }} key={legend.legend_id}/>
+        })
 
-      }
+        }
+      </FlipMove>
     </StyledCharList>
   )
 }
